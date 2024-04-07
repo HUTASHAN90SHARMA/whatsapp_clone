@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat application</title>
+    <link rel="stylesheet" type="text/css" href="1.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="1.js"></script>
+
+     <!-- to add emoji link  -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" 
+     integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <!-- defer se dom load hone k baad script aayegi -->
+     <!-- <script defer src="client.js"></script> -->
+     <!-- <script defer src="http://localhost:8000/socket.io/socket.io.js"></script> -->
+     <!-- http://yourwebsite.com:12345/socket.io/socket.io.js -->
+ 
+</head>
+
+<body>
+    <!-- <script>
+        location.reload();
+    </script> -->
+    <input id="doc_input" type="file">
+    <div class="container">
+        <div class="leftSide">
+            <header class="search_bar">
+                <img src="https://e1.pxfuel.com/desktop-wallpaper/493/47/desktop-wallpaper-41-dp-for-instagram-pics-that-are-like-by-millions-instagram-dp-boys.jpg"
+                    alt="DP">
+                <h4>Hutashan</h4>
+                <ul>
+                    <li><ion-icon name="scan-circle-outline"></ion-icon></li>
+                    <li><ion-icon name="chatbox"></ion-icon></li>
+                    
+                </ul>
+                <div class="dropdown">
+                    <button onclick="toggleDropdown()" class="dropbtn"><ion-icon name="ellipsis-vertical"></ion-icon></button>
+                    <div id="dropdownOptions" class="dropdown-content">
+                        <button>New Group</button>
+                        <button>New Broadccast</button>
+                        <button>Linked Device</button>
+                        <button>Payments</button>
+                        <button>Settings</button>
+                    </div>
+                </div>
+            </header>
+            <div class="search">
+                <div>
+                    <input type="text" id="inp" onkeyup="effective()" placeholder="search or start new chat">
+                    <ion-icon name="search-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="chatbox "> 
+                <div class="block nm" onclick="pen('Ram','data:image/jpeg;base64,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','chattime15')" ondblclick="new1()" >
+                    <div class="imgbx">
+                        <img class="image"
+                            src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAlAMBIgACEQEDEQH/xAAcAAAABwEBAAAAAAAAAAAAAAAAAQIDBAUGBwj/xAA6EAACAQMCBAQDBwIFBQEAAAABAgMABBESIQUxQVEGEyJhcYGRBxQjMkKhsVLhFoLB0fEzNENy8BX/xAAYAQADAQEAAAAAAAAAAAAAAAAAAQIDBP/EAB4RAQADAAMBAQEBAAAAAAAAAAABAhEDEiExQWEi/9oADAMBAAIRAxEAPwDWBV7UkxqsgccuWKdGDQIGKzMYVOa9acA0jbBplMhsH5U7vikC1kI6Cj8zNI0mjCH2owaMtSkPWk6e9HpowafUJ1pWqFRnFRm0xjLchS1lhwDldPfO1LD06Z4hyFINwvRdqMyIOS5ptpFP6aMObA117mmzOTtv8zSWOeQpGKfVOjMjZ50PMP8AVSSKQQaMGlls/wDkamnA7mj3ojmng0wU3o6Xg0KZJIZe4+tEWHUj60/FZhh6kwRSpbL05VBkVOweIcmkgHXjHanopUkXY7inVsVdQwVCDSLiGCyt5bidUSKNSztnGAKYL26kDAzVRxDxPwqxEqvcrJLGDlEycntn41zrxF4svL8iOCU28RYlRCdO3v1rMXM7SEksQScnfmaqIJveI/aJcmUR2NvFGuCGdjqIPtVRa+MuLjIkvZDtgtgE/wAVk3kYN8cUUE2mRgeR6U8DT3vi3iFyWjuLmd4mbJUSFcjttinLK9vIJlNveS+UXwqu5ZR7EH+ayVxlnyvQ7VItb1kiKNnSy4J7Eb0YHYPBfGRxS1lidDHJA+nSegOcD+a0Y35bgc8VzT7N5isFyZGY6ps5G+Rj/n61vbVJA+pTIIz+bNSE3QTyotDdjRmAkn8WSmvJcOA1w4/1pA55bDnSWj96KS3kIGidqSkWobzPttuKABXFEQDQeAn8szD5CieIhMrMQe+BQBafY/ShTapKR/3J+goUg0rPp+Hem3ckbdaQ7ZFN6m5GoiFyZRhbynfCscgHpWY+02SSXw15aOQrzr5mDj0KrMflsK006Zwxxkcs1kPtOgvr7gcUVlBI0QcvcNHgYUDPX37VpEJ1x9pGCg5pDNkY7cqScrkc16Uu2tprpwkSZJ71e4URMgrhl0sDnvTkVjcXLBYYmb4CtJwfwq3mJJc74PKugcJ4fb25XRAoYe1Z25Yj43pwTP1zD/DfE1RGmgZVbqByqFPwmWCVotD5B3ya9CrAlzatG6L6hjlXN/FPCLm0vTM0DeS24kUZGamt9n0X44iPEX7Nz924qttK2Y5AdPscV1dCgBBG3TFcb4JcxWnFrWV29KyKT9f712M/CtJYBrVdgnpNIeSNhuh+lGSTyz9aaIIOcZowCZkHTAPemZI99SH1Y5HkafK6h+XNI0MpxsRQDIk1HSedGdWd+VKki1bjY0FI3D7UAWOwoUr4cqOgH/OJGQwojKw61Ht1jEjW7gFl5HvUk28WPyUsBYywBzmmbu2FxbywszKkqFCRzGetSY0VVwBsKc0imHn/AMZeF7jw3exrIS8E6lo5QDjPVfj/AL0PDRBiLY/K25Ndk8X8C/xFwC54ehAuExJA56ONwPgdwfjXFGkk4daR2YPlXaO/3hCuSpzsPpStsxi6Tk66FYOugBnANSZeNW3DRruJAAeW/OuW/fLiGcCSZpVOCcOQQOuMcj8cj2rWcS4anF/CUl9aR5ktn5bltA6k57bnp2FZTxZPsuiObtHiwl+03EhS0hxGP1Hc/StD4Y8WWviLXBIrLOn5taYGO+22P7d64ulvLrBKnGedbDwXO0XiPhkdvNIfMmCsgOzLjfPtj+Ku3HEV8ZU5Ldllxbw1O3iGWKyXyoD+IxZf053wPjW/4FxePiD3Fq8TQzW2kMHOdQPI/tT3H7ONyZDK8ZETAyxnDKOeR9KrfClnMHurm7YNcOiIXxjKgkgn3wRUVts41vSvSZ/V+dIPOknQeRpZ5mkEHoa2chl8x/k5HnR4DDJO9LXBJyNx0pLIeabUA2+RTbAMMHpS/MV20k4btiiZDTBos6nAG1ClaDQoJJZcSoxG+MVJEZxjvT5s8qATv3pcSaVCk7gVGqxFMLJhgxwNyKdWMlQcncVJJAwNWx57USnB2OflS08R2hY4KnkcmuB+MrZ+HeKOIGWPBllMiAjYg75zXbuK8egtvKitmSaSRsED9I6mqjjHCuFcajjm4pFHIkAJyfTgfLp7Ud4hUcVpcKllWaQ7BcjGO9dT+zie3teDCC6IVZBlhzx71Rca8McPAku+BjzII2IePOeXMrnmKgcJtrm/vQ3Dop5hEAsjIpKp7bUr2i8eNeOnSfVtxDwpYcRn+8cBv/OBYmSOPGE7YrW+DuB2fDcXCxZugMGV92Hw7VT8L4w6IY4dUsoXDCJe38VN8OcWvJfMXiEDRP8AoLjcrWczbPZbRSsT8a+8mLE6MZA2J5UXDmZ0lWRQsivg6eTdiKrpLgCMsTQ4jxL/APKhS9ddUWQJFzjIPY9DRxfUc3xcsnxogF61aNwxnjV7d1ZGGQG2NVt3byRnQ6MpHtXTjjNMqk5BojpI5miRta5O3xomQmkDFxCrYKMVcHOaOM6hvseWDSxjJXqKQ69qABXehRNJg4xmhTJa+a55nFIZnDZ1enqaSpQgAJg9d80rbSVA2NZrL3qFxm7+4cLnnctjTpAXnk7CpiOSDkE4ONqx/je5uGvYLQkrb6A4X+pt9/l/rSmchVI7WxVcJGq7h1ZbEeN61M1tDd2c9rPGGilQo47g1R8GVFZc42XatDGwBGOXesf67cxibHw3xLh/FIobOUtaDfUzY0nHMd/h0q+uOJReFYPw44w76j5SLjUx3P79atJrhYSWQFzsAo5k+1V/HvCU/F4UuNapeY3Rz6fgDTj/AFPiLTFfrLcL4rcPKSYVLSMWkKjHqJydq0y6XAlmwMCsde2vEeAXBguofKkI1A5yGHtQhmvLuMrLcusZ5jPOi0eri+r6PiH3y9Cxn8CNvqa0tvZxcbmt7Kf/AKeoSuBv6UIP7nA+dYOzdbckB9lroHgzKWMl7IDrm9Mfso/3P8Cr4q7ZHNbKNYtwYWff0IcYNPRSu+GOwO43qqUs8gGcsSTg8h7/AAqwgyMaBljzZq7McCfpSRcOqt8RUG84TDIpMI0P+xqSpxzbelhjzBHzqMDK3Vq8LlJkw3/3KmCMc61txFFdR6ZB+26ms5d2ktrLpbS3UHuKmYw0EoD/AMUKN7oI2kwnPtQqQft2wNHUc6fFNhVxypxdI50GUpCsD+n271n/AB3Bm0tbjAyjlMjpkf2rQMAy4G1QOPwtecDukVfUq61/ynP+4qbR4qk5ZiOGSlSVcnI5VqLKdZrUDPrHOsdwqyvuIX33exXU6jUXY7L2zV+eG8V4VMhuIhKZnCKtuC2Se/LA996yisz8ds8lY81f8J4XJJcm7ufSob8GIH83ucfxV6UW2jkY4L55dqi2mqCGMshVsdcZ/br0+VMXNwSrDOc10cdMcPJebSqPFVknG7dVYDzI8+W3+lYC41RTFCpTTsR2rpIB07jrk1i/FXCOIreG84bD96ikGJbcMAyn+pCcfMVHJTZ1pxcvWMlVWVs9/wAQitI8gyNuR0HU11S1RYYo4Y1CrGoRVHQAYrL+EuCNw+Iz3Sj75KPUM58te1aaN/XWnFXrCea/afFlahQcnfO5PbsKsohkZPLpVfaEDTttzJPWrGNlbkc1qxPADHIUDsdqAGBQIpGIn9Q/MP3pF1Al1D5bc8ZU45Uo7UUZGMnkKWBlrhHt5WjlwrDv1oVpnhgmw00Ss2MZNHU4bOClqKbVgacUg1mZzaiDLGpMhGjBzq2GKAxUbiVlFxCwmtJo0lSVcFH3UnmM+1MIfgeO3jg4m1jG4H3t1Qy82QbDHtkECpfjjiUXDPDV3POxEpQpEFbSxkbZQD0369Kwlv4a8W8Jka5sb20tY4kISKFidKDfSoIx9RVn4V4Rf+IbqHjPie4kuooSfukEihVJ/q0gAY/mnv5CpjLdtW/gfhXE7izM93NIkcpLJHKehxyGB259d6nzoysyEYZSQR2rS2z4PyxUTjNizstxCpP9YH81cR18K95vOyohjWEPVN6Q8ZzkY+dJDZvQehyKlMAKMSZPoX3PWn7QqGQuAR1qJK2Tip1hD5rgaNSruwpwS7thbzD8IKWHNS1SAGQ4EQC9xVY9qICJ7eMAjoBjFWdpcC5iyNmHMVRHhuKBovUDuaDHbekZqQ42psj1LsST0pY3JY8hUWW5YswjGB1JOAPnQErzEG2dXcgUdQRMANnH+VciiowKZQe1OLkcxTSsMczTwbbBrBRQalg/vTIyDtypQbnzpg4xGjlS4XCoAoAHYUxq3waCNjlyzV1kpW1vJuKso2yOYxWfVyNOO9XCyaNAHIirSznFrM2vEjp/K51r7Z5imXY4rVX1pHf2+gnDjdW7VlLhXiJjkBVl5ikaOd3960/D4FhgRW/NjLfGs/w2Ez3qqM4HqPwrWwYI0EY7UwUirjGajGI21yJF/KxwalqOlFKMxsDTI4aZkPSl5/DHwpiWRYYnmcbAUjQ+LXggRYFZldtyVXJAqDG0b/plc9NWBSC3nTNK7sjtvnn8qkaJlAOEkHddjQDqnb8oHxNCkhhj1DB+FCmSpAGOVO9RQoVzrK6Ukn2HOhQpg4oypNE40quNskk0dCqqUlAnC/GrfJ9H/rQoVpBJNuxxVb4ogQRRzAYfOknvQoUpKFb4ecpenHUYI+daKT8NgV57UKFMzzbOD3o25UKFANMTpNVnGWJMcefSBqx70KFAQ9IxTJd4H/DYihQpklxyMygtuaFChQH/2Q=="
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4   class="check" >Ram</h4>
+                            <p class="time" id="chattime15">just now</p>
+                        </div>
+                        <div class="message">
+                            <p>Hello! Ram </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block nm" onclick="pen('Papa ji','https://pratidin24ghanta.com/wp-content/uploads/2023/02/Radhe-Krishna-Ki-Photo-HD_after.jpg','chattime7')" ondblclick="new1()" >
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://pratidin24ghanta.com/wp-content/uploads/2023/02/Radhe-Krishna-Ki-Photo-HD_after.jpg"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4   class="check" >Papa Ji</h4>
+                            <p class="time" id="chattime7">last week</p>
+                        </div>
+                        <div class="message">
+                            <p>Hello! My dear Son  </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block unread nm" id="ab1" ondblclick="new1()" onclick="pen1('Tushar Yadav','https://i.pinimg.com/474x/3b/75/7f/3b757f815c429fef230ce1333d3f696c.jpg','chattime0','chatno0')">
+                    <div class="imgbx">
+                        <img class="image" src="https://i.pinimg.com/474x/3b/75/7f/3b757f815c429fef230ce1333d3f696c.jpg"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Tushar Yadav</h4>
+                            <p class="time" id="chattime0">9:46 am</p>
+                        </div>
+                        <div class="message">
+                            <p>Tell me one thing </p>
+                            <b id="chatno0">3</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block unread nm" onclick="pen1('Anushka Sharma','https://i.pinimg.com/originals/2b/93/fb/2b93fbacb0a85a9e59650bce7bc8f384.jpg','chattime1','chatno1')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://i.pinimg.com/originals/2b/93/fb/2b93fbacb0a85a9e59650bce7bc8f384.jpg"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check"  >Anushka Sharma</h4>
+                            <p class="time" id="chattime1">yesterday</p>
+                        </div>
+                        <div class="message">
+                            <p>kal college ke baad milna... </p>
+                            <b id="chatno1">1</b>
+                        </div>
+                    </div>
+                 </div>
+
+                <div class="block unread nm" onclick="pen1('Rohan Verma','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjGyCrEl6wQH4sfJ3hsLU4e8V9xQty8u4qN4Fcf1WOHw&usqp=CAU&ec=48665699','chattime2','chatno2')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjGyCrEl6wQH4sfJ3hsLU4e8V9xQty8u4qN4Fcf1WOHw&usqp=CAU&ec=48665699"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Rohan Verma</h4>
+                            <p class="time" id="chattime2">28 May</p>
+                        </div>
+                        <div class="message">
+                            <p>Rohan here </p>
+                            <b id="chatno2">5</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block nm" onclick="pen('Kiara kumari','https://funylife.in/wp-content/uploads/2022/11/20221105_164725-1024x1024.jpg','chattime4')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://funylife.in/wp-content/uploads/2022/11/20221105_164725-1024x1024.jpg"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Kiara kumari</h4>
+                            <p class="time" id="chattime4">28 May</p>
+                        </div>
+                        <div class="message">
+                            <p>kal mujhe college ke baad milna </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block nm" onclick="pen('Priyana Chaudhay Singh','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwtvrUSTE6mkWYblnAM_7QHpIVZpqB2P0kV3ddi4nRVA&usqp=CAU&ec=48665699','chattime5')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwtvrUSTE6mkWYblnAM_7QHpIVZpqB2P0kV3ddi4nRVA&usqp=CAU&ec=48665699"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Priyana Chaudhay Singh</h4>
+                            <p class="time" id="chattime5">26May</p>
+                        </div>
+                        <div class="message">
+                            <p>call me. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block nm" onclick="pen('Sana Mirza M.P.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVYWl_8iBFslVBZUNtUzmWXDs0NGY-SIUnFDrTpMsNjA&usqp=CAU&ec=48665699','chattime6')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVYWl_8iBFslVBZUNtUzmWXDs0NGY-SIUnFDrTpMsNjA&usqp=CAU&ec=48665699"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Sana Mirza M.P.</h4>
+                            <p class="time" id="chattime6">25 May</p>
+                        </div>
+                        <div class="message">
+                            <p>Start chat </p>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="block nm" onclick="pen('Mama Ji','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT3uSnu3Ici1ez0hS6LHqc90uOzWOU7rY3UUbP1taVSQ&usqp=CAU&ec=48665699','chattime8')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT3uSnu3Ici1ez0hS6LHqc90uOzWOU7rY3UUbP1taVSQ&usqp=CAU&ec=48665699"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4   class="check" >Mama Ji</h4>
+                            <p class="time" id="chattime8">10:46</p>
+                        </div>
+                        <div class="message">
+                            <p>Hello! beta.Tell me something about you </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block nm" onclick="pen('Urfi Javed','https://live.staticflickr.com/3030/2658283615_cab8af9a50_c.jpg','chattime12')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://live.staticflickr.com/3030/2658283615_cab8af9a50_c.jpg"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Ram</h4>
+                            <p class="time" id="chattime12">10:46pm</p>
+                        </div>
+                        <div class="message">
+                            <p>Hello! ram here.Tell me something about you </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block nm" onclick="pen('johnpur vale mausa','https://live.staticflickr.com/3030/2658283615_cab8af9a50_c.jpg','chattime9')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image" src="https://live.staticflickr.com/3030/2658283615_cab8af9a50_c.jpg"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4   class="check" >johnpur vale mausa</h4>
+                            <p class="time" id="chattime9">10:46</p>
+                        </div>
+                        <div class="message">
+                            <p>Hello! Riya here.Tell me something about you </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block nm" onclick="pen('Love','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuqUrZZGM9_cL6LvTowNoXjwlyawe726_7NvxE79r3VA&usqp=CAU&ec=48665699&reload=on','chattime10')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuqUrZZGM9_cL6LvTowNoXjwlyawe726_7NvxE79r3VA&usqp=CAU&ec=48665699&reload=on"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Love</h4>
+                            <p class="time" id="chattime10">10:46</p>
+                        </div>
+                        <div class="message">
+                            <p>Hello! Riya here.Tell me something about you </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block nm" onclick="pen('Ravi Shastri','https://i.guim.co.uk/img/media/c5b63fbdee2e371cd3c4d70b482b45ce3500432e/0_223_4395_2637/master/4395.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=188ec718e7fbc628439a067afb56c4d9','chattime11')" ondblclick="new1()">
+                    <div class="imgbx">
+                        <img class="image"
+                            src="https://i.guim.co.uk/img/media/c5b63fbdee2e371cd3c4d70b482b45ce3500432e/0_223_4395_2637/master/4395.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=188ec718e7fbc628439a067afb56c4d9"
+                            class="cover">
+                    </div>
+                    <div class="details">
+                        <div class="listHead">
+                            <h4  class="check" >Ravi Shastri</h4>
+                            <p class="time" id="chattime11">10:46</p>
+                        </div>
+                        <div class="message">
+                            <p>Hello! Riya here.Tell me something about you </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rt_flex">
+            <div class="rightSide">
+                <header class="header" style="position:relative;background-color:rgb(102, 215, 125);">
+                    <div class="imgText">
+                        <div class="userimg">
+                            <img class="ig" id="change_photo" src="https://pratidin24ghanta.com/wp-content/uploads/2023/02/Radhe-Krishna-Ki-Photo-HD_after.jpg"
+                                class="cover" onclick="big_photo()">
+                        </div>
+                        <h4 id="change_name">Papa ji<br><span id="on">Online</span></h4>
+                    </div>
+                    <ul class="nav_icons">
+                        <li><a href="tel:9060612702" style="color: black;"><ion-icon name="videocam-outline"></a></ion-icon></li>
+                        <li><a href="tel:9060612702" style="color: black;"><ion-icon name="call-outline"></ion-icon></a></li>
+                        <li><ion-icon name="search-outline"></ion-icon></li>
+                    </ul>
+                </header>
+            </div>
+                <div class="display" id="final_3">
+                    <script>
+                        append("hello","right");
+                        append("hi","left");
+                    </script>
+                </div>
+            <div class="send" id="chatbox_input">
+                <ion-icon id="emoji_send" onclick="emoji_send()" name="happy-outline"></ion-icon>
+                <ion-icon id="doc_send" onclick="doc_send()" name="attach-outline"></ion-icon>
+                <input  type="text" id="send" onkeypress="check_enter()" placeholder="Type a message ...">
+                <ion-icon name="mic"  onclick="toggleSpeechRecognition()"></ion-icon>
+                <span><button id="send_btn" onclick="bhejna()">Send</button></span>
+            </div>
+        </div>
+</div>
+<img id="photo_k_liye" src="" onclick="photo_gayab()">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+    <!-- emoji add karna k liye -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" 
+    integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+        $('#send').emojioneArea();
+    </script> -->
+
+    <!-- Ek css ki file add ki h uper  -->
+</body>
+
+</html>

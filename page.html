@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .upper {
+    background: url("https://w0.peakpx.com/wallpaper/946/21/HD-wallpaper-whatsapp-theme-background-green-original-simple-texture.jpg");
+    width: 100%;
+    height: 35%;
+    display:flex;
+  }
+
+  .lower {
+    background : url("https://th.bing.com/th/id/OIP.ouYqzieySw2PuNuVR30caAAAAA?rs=1&pid=ImgDetMain");
+    width: 100%;
+    height: 65%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .login-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 350px;
+    opacity: 1;
+    margin-right: 20px;
+    position: relative;
+  }
+  
+  .login-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+    color: #124e2a;
+  }
+
+  .login-container input[type="password"] {
+    width: calc(100% - 80px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background-color: transparent;
+    outline: none;
+    transition: border-bottom-color 0.3s ease;
+  }
+
+  .login-container input[type="password"]:focus {
+    border-bottom-color: #2b672f;
+  }
+
+  .login-container input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #257040;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    filter: brightness(90%);
+  }
+
+  .pic {
+    display: block;
+    margin: 0 auto;
+    width: 70px;
+    height: 70px;
+  }
+
+  .fa-whatsapp {
+    font-size: 100px;
+    color: #e9f3ec;
+    padding-top: 50px;
+    padding-left: 60px;
+    filter: brightness(300%);
+  }
+
+  .fa-lock {
+    padding-top: 30px;
+    padding-left: 160px;
+  }
+
+  .login-container h4 {
+    padding-left: 90px;
+    padding-top: 10px;
+    font-size: 20px;
+  }
+
+  .img1 {
+    width:105px;
+    height:240px;
+    object-fit: contain;
+    filter: brightness(90%);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .img3 {
+    width:105px;
+    height:240px;
+    object-fit: contain;
+    filter: brightness(90%);
+    padding-left: 170px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .content {
+    color: #fff;
+    width: 250px;
+    padding-top: 40px;
+    padding-left: 70px;
+  }
+  .password{
+    border :none;
+    width: calc(100% - 80px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background-color: transparent;
+    outline: none;
+    transition: border-bottom-color 0.3s ease;
+  }
+  
+ /* checking */
+ 
+
+
+</style>
+</head>
+<body>
+  <div class="upper">
+    <i class="fa-brands fa-whatsapp"></i>
+    <div class="content">
+      <h1>WhatsApp</h1>
+      <p>"Experience the Power of Instant Communication with WhatsApp - Your Digital Lifeline."</p>
+    </div>
+    <img height="80%" width="20%" src="public/lightchats@2x.png" alt="image" class="img3">
+    <img height="80%" width="20%" src="public/lightchat@2x.png" alt="image" class="img1">
+    <img height="80%" width="20%" src="public/lightcalls@2x.png" alt="image" class="img1">
+    <img height="80%" width="20%" src="public/lightstatus@2x.png" alt="image" class="img1">
+    <img height="80%" width="20%" src="public/lightvideocall@2x.png" alt="image" class="img1">
+    <img height="80%" width="20%" src="public/lightsplashscreen@2x.png" alt="image" class="img1">
+  </div>
+  <div class="lower">
+    <img width="500px" height="400px" src="public/phone-1@2x.png" class="img2" alt="img">
+    <div class="login-container">
+      <div class="pic">
+        <img width="70px" height="70px" src="https://static.thenounproject.com/png/1743561-200.png" alt="profile pic">
+      </div>
+      <h2>Hutashan</h2>
+      <form id="loginForm">
+        <input type="password" id="password" name="password" placeholder="Enter Password" required>
+        <i class="fas fa-eye show-password-icon" onclick="togglePasswordVisibility()"></i>
+        <i class="fas fa-microphone microphone-icon" onclick="toggleSpeechRecognition()"></i>
+        <input type="submit" id="ab" value="Unlock">
+      </form>
+      <i class="fa fa-lock" aria-hidden="true"></i>
+      <h4>WhatsApp Locked</h4>
+    </div>
+    <img width="500px" height="400px" src="public/phone-2@2x.png" class="img2" alt="img">
+  </div>
+  <script>
+    // js for view icon
+  function togglePasswordVisibility() {
+  var passwordInput = document.getElementById('password');
+  var passwordIcon = document.querySelector('.show-password-icon');
+  
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    passwordIcon.classList.remove('fa-eye');
+    passwordIcon.classList.add('fa-eye-slash');
+    passwordInput.classList.add('password');
+  } else {
+    passwordInput.type = "password";
+    passwordIcon.classList.remove('fa-eye-slash');
+    passwordIcon.classList.add('fa-eye');
+    passwordInput.classList.remove('password');
+  }
+}
+  // js for mic
+    var isSpeechRecognitionEnabled = false;
+    var recognition;
+
+    function handleSpeechRecognition() {
+      const passwordInput = document.getElementById('password');
+      
+      // Initialize speech recognition
+      recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      // Capture speech
+      recognition.onresult = function(event) {
+        const speechToText = event.results[0][0].transcript;
+        passwordInput.value = speechToText;
+        var x=document.getElementById("ab");
+        x.click();
+      };
+
+      // Error handling
+      recognition.onerror = function(event) {
+        console.error('Speech recognition error: ', event.error);
+      };
+    }
+
+    function toggleSpeechRecognition() {
+      if (!isSpeechRecognitionEnabled) {
+        handleSpeechRecognition();
+        recognition.start();
+        isSpeechRecognitionEnabled = true;
+      } else {
+        recognition.stop();
+        isSpeechRecognitionEnabled = false;
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      var password = document.getElementById("password").value.toLowerCase();
+      if (password !== "12345") {
+        alert("Incorrect password.");
+        
+        event.preventDefault();
+      } else {
+        open("http://127.0.0.1:3000","_self");
+        alert("Login successful!");
+      }
+    });
+  </script>
+</body>
+</html>

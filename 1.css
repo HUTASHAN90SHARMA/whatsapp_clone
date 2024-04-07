@@ -1,0 +1,427 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    font-family:'Open Sans',sans-serif;
+}
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:calc(100vh - 4px);
+    background:linear-gradient(#009688 10%,#d9dbd5 10%);
+}
+.container
+{
+    position:relative;
+    /* width:1396px; */
+    /* max-width:100%; */
+    margin-left: 25px;
+    height:97vh;
+    width: 2000px;
+    background:#fff;
+    box-shadow:0 1px 1px 0 rgba(0,0,0,0.06),0 2px 5px 0 rgba(0,0,0,0.06);
+    display:flex;
+    margin-top: 20px;
+}
+.leftSide{
+    position:relative;
+    flex: 30%;
+    background: #fff;
+}
+.rightSide{
+    position:relative;
+    width: 1008px;
+    border-right:1px solid black;
+}
+
+/* .container .rightSide::before{
+    content: '';
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: url('');
+    opacity: 0.06;
+} */
+
+.leftSide .search_bar{
+   display:flex;   
+   background-color:rgb(237, 225, 225);
+   height:49px;
+   align-items: center;
+} 
+.search_bar img{
+    height:40px;
+    width:40px;
+    border-radius:50%;
+    /* margin-left:6px;
+    margin-top:6px;
+    margin-bottom:6px; */
+    margin:5px;
+    
+}
+.search_bar ul{
+  display:flex;
+  /* position:relative;
+  top:3px;
+  right:5px; */
+  padding-top:10px;
+  padding-left:220px;
+} 
+.search_bar ul li{
+    display:flex;
+    list-style:none;
+    cursor:pointer;
+    color:#51585c;
+    font-size:1.5em;
+    margin-left:22px;
+}
+.search{
+    position:relative;
+    width:100%;
+    height:50px;
+    background:#f0e9e9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0 15px;
+    margin-top:2.5px;
+}
+.search div{
+    width:100%;
+    margin-top:1.4px;
+    
+}
+.search div input{
+    width:100%;
+    outline:none;
+    border:none;
+    background:#fff;
+    padding:6px;
+    height:38px;
+    border-radius:30px;
+    font-size:14px;
+    padding-left:40px;
+}
+.search div ion-icon{
+    position:absolute;
+    left:26px;
+    top:18px;
+}
+.container .rightSide::before{
+    content: '';
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    /* background:url('https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg'); */
+    opacity:0.6;
+}
+.leftSide .chatbox{
+    position:relative;
+    height:calc(100% - 99px);
+    overflow-y:auto;
+}
+
+.chatbox .block{
+    position:relative;
+    width:100%;
+    display:flex;
+    align-items:center;
+    padding:15px;
+    border-bottom:1px solid rgba(0,0,0,0.06);
+}
+.chatbox .block .imgbx{
+    position:relative;
+    width:45px;
+    height:45px;
+    overflow:hidden;
+    border-radius:50%;
+    margin-right:10px;
+}
+.image{
+    height:40px;
+    width:40px;
+    display:block;
+    margin:auto;
+    cursor:pointer;
+}
+.chatbox .block .details{
+    position:relative;
+    width:100%;
+}
+.chatbox .block .details .listHead{
+    display:flex;
+    /* justify-content:space-around; */
+    margin-bottom:5px;
+}
+.chatbox .block .details .listHead .h4{
+    font-size:1.1em;
+    font-weight:600;
+    color:#111;
+    
+}
+.chatbox .block .details .listHead .time{
+    font-size:0.75em;
+    /* with respect to parent */
+    color:black;
+    position:absolute;
+    top:3px;
+    right:7px;
+   
+}
+
+.message{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.message p{
+    color:#aaa;
+    font-size:0.9em;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.message b{
+   background:#0dd755;
+   color:#fff;
+   min-width:20px;
+   height:20px;
+   border-radius:50%;
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   position: sticky;
+}
+.chatbox .block:hover{
+    background-color:rgb(243, 234, 234);
+    cursor:pointer;
+}
+.chatbox .block.unread .details .listHead .time{
+    color:#0dd755;
+}
+.imgText{
+    display:flex;
+    /* position:relative;
+    justify-content:center;
+    align-items:center; */
+    /* background-color:#d9dbd5; */
+}
+.ig{
+    height:40px;
+    width:40px;
+    border-radius:20px;
+    position:relative;
+    left:20px;
+}
+.rightSide .header{
+    display:flex;
+    justify-content:space-between;
+    background-color:#d9dbd5;
+    border:1px solid black;
+   
+}
+.imgText h4{
+   font-weight:500;
+   font:black;
+   line-height:1.2em;
+   margin-left:30px;
+   margin-top:4px;
+}
+.imgText h4 span{
+    font-size:0.8em;
+    color:#555;;
+}
+.nav_icons{
+    display:flex;
+    margin-right:30px;
+    justify-content:space-between;
+}
+/* .nav_icons ion-icon{
+    position:absolute;
+    left:826px;
+    top:20px;
+} */
+.rightSide .header ul li{
+    display:flex;
+    list-style:none;
+    cursor:pointer;
+    color:black;
+    font-size:1.5em;
+    margin-left:22px;
+    margin-top:10px;
+}
+/* .foot{
+    height:30px;
+    width:200px;
+    position:relative;
+    top:30px;
+    left:400px;
+    display:visible;
+} */
+.send
+{
+    border: 1px solid rgb(242, 200, 200);
+    border-radius: 10px;  
+    width:100%;
+    height: 60px;
+    background: white;
+    padding:15px; 
+    display: flex;
+    justify-content: space-between;
+    /* issa corner vali space pahle occupy karega and then bich vali jissa congested nhi lagega */
+    align-items: center;
+    /* issa all the items come in one line  varna sab uper nicha hota */
+}
+
+.display
+{
+    background-image: url('https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg');
+    overflow-y: auto;
+    background-repeat:repeat-x repeat-y;
+    visibility: visible;
+    opacity: 0.99;
+    /* Opacity is the degree to which content behind an element is hidden, and is the opposite of transparency. */
+    height: 81vh;
+    overflow-wrap: break-word; 
+    /* break the word if trying to overflow */
+}
+.visible
+{
+    visibility: visible;
+}
+.display_2
+{
+    visibility: hidden;
+}
+
+/* #chatbox_input
+{
+    width:100%;
+    height:60px;
+    background:white;
+} */
+/* gtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt */
+#send
+{
+    width:83%; 
+    height:35px;
+    padding-left: 10px;
+    border-radius: 15px;
+}
+.message_box
+{
+    max-width: 24%;
+    padding:10px;
+    margin: 17px 12px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.left
+{
+    background-color:rgb(225, 235, 225);
+    float: left;
+    clear:both;
+}
+.right
+{
+    background-color:rgb(102, 232, 102);
+    float: right;
+    clear: both;
+}
+#send_btn
+{
+    width:100px; 
+    height:30px; 
+    border-radius: 10px;
+    font-weight:bold;
+}
+
+#rt_flex
+{
+    display: flex;
+    flex-direction: column;
+}
+
+#doc_input
+{
+    display: none;
+}
+
+#photo_k_liye
+{
+    height: 300px;
+    width: 300px;
+    background-color: white;
+    position:absolute;
+    display: none;
+}
+#dropdown
+{
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    margin-left: -500px;
+    margin-top: -475px;
+    /* display: none; */
+}
+.dropdown1
+{
+    width:100px;
+    height:min-content;
+    background-color: white;
+    border: 1px solid black;
+    position: relative;
+    align-items: center;
+    
+}
+
+.dropbtn {
+    background-color: transparent;
+    border: none;
+    padding-top: 15px;
+    padding-left: 20px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Style the buttons inside the dropdown */
+.dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Hide the dropdown menu when the dropdown content is hovered */
+.dropdown-content:hover {
+    display: block;
+}
